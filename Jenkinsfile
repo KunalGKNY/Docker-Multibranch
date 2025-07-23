@@ -1,17 +1,21 @@
 pipeline {
     agent any
 
+    environment {
+        REPO_URL = 'https://github.com/KunalGKNY/Docker-Multibranch.git'
+        CREDENTIALS_ID = '3ed9844a-5ef1-4a41-b039-5db654cd6252'  // Replace with real Jenkins credentials ID
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: '3ed9844a-5ef1-4a41-b039-5db654cd6252', url: 'https://github.com/KunalGKNY/Docker-Multibranch.git'
+                git branch: "${env.BRANCH_NAME}", credentialsId: "${env.CREDENTIALS_ID}", url: "${env.REPO_URL}"
             }
         }
 
         stage('Build and Deploy Container') {
             steps {
                 script {
-                    // Identify the branch and define container name and port
                     def branch = env.BRANCH_NAME
                     def containerName = ""
                     def hostPort = ""
@@ -29,11 +33,11 @@ pipeline {
                         error("Branch ${branch} not handled.")
                     }
 
-                    // Remove existing container if it exists (idempotent)
+                    // Cleanup any existing container
                     sh "docker rm -f ${containerName} || true"
 
-                    // Run new container with updated index.html
-                    sh '''
+                    // Prepare content and deploy new container
+                    sh """
                         mkdir -p /tmp/webcontent
                         cp index.html /tmp/webcontent/
                         docker run -d \
@@ -41,7 +45,7 @@ pipeline {
                             -p ${hostPort}:80 \
                             -v /tmp/webcontent:/usr/local/apache2/htdocs/ \
                             httpd
-                    '''
+                    """
                 }
             }
         }
@@ -49,13 +53,13 @@ pipeline {
 
     post {
         success {
-            echo "Deployment completed successfully."
+            echo "✅ Deployment completed successfully."
         }
         failure {
-            echo "Deployment failed. Please check the logs."
+            echo "❌ Deployment failed. Please check logs."
         }
         always {
-            echo "Pipeline execution finished."
+            echo "ℹ️ Pipeline execution finished."
         }
     }
 }
