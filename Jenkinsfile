@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: '3ed9844a-5ef1-4a41-b039-5db654cd6252', url: 'https://github.com/KunalGKNY/2025Q2.git'
+                git credentialsId: '3ed9844a-5ef1-4a41-b039-5db654cd6252', url: 'https://github.com/KunalGKNY/Docker-Multibranch.git'
             }
         }
 
