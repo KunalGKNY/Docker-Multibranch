@@ -52,7 +52,7 @@ stages {
                sh '''
 			   
 			     
-                 docker exec C1 rm -f /usr/local/apache2/htdocs/index.html || true
+                 docker exec C1 rm -rf /usr/local/apache2/htdocs/index.html || true
   
                   '''
             }
