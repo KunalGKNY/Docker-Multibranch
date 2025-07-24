@@ -5,9 +5,14 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
+
+                
+                
                 dir('/mnt/workspace/2025Q1') {
                     echo "Cleaning workspace..."
-                    sh 'rm -rf /mnt/workspace/2025Q1/*'
+                    
+                    deleteDir() 
+                   // sh 'rm -rf /mnt/workspace/2025Q1/*'
 
                     echo "Cloning repository..."
                     git(
