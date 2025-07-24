@@ -40,7 +40,7 @@ pipeline {
         stage('Copying the file into the container') {
             steps {
                 sh '''
-                    docker cp /mnt/workspace/2025Q2/index.html C3:/usr/local/apache2/htdocs
+                    docker cp /mnt/workspace/2025Q3/index.html C3:/usr/local/apache2/htdocs
                     docker exec C3 chmod 644 /usr/local/apache2/htdocs/index.html
                 '''
             }
