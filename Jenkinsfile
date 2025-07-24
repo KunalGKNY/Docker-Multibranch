@@ -6,7 +6,8 @@ pipeline {
             steps {
                 dir('/mnt/workspace/2025Q3') {
                     echo "Cleaning workspace..."
-                    sh 'rm -rf /mnt/workspace/2025Q3/*'
+                     deleteDir() 
+                  //  sh 'rm -rf /mnt/workspace/2025Q3/*'
 
                     echo "Cloning repository..."
                     git(
