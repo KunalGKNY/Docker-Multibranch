@@ -24,7 +24,11 @@ pipeline {
             steps {
                 sh '''
                     # Create container C3 if not exists
-                    docker rm -rf C3 || true
+
+                    docker stop C3 || true
+                   // docker rm C3
+                    
+                    docker rm -rf C3 
                     docker run -dp 8081:80 --name C3 httpd
                    // docker inspect C3 >/dev/null 2>&1 || docker run -dp 8081:80 --name C3 httpd
                 '''
