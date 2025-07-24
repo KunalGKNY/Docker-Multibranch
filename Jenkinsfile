@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sh '''
                     # Create container C3 if not exists
-                    docker inspect C3 >/dev/null 2>&1 || docker run -dp 8080:80 --name C3 httpd
+                    docker inspect C3 >/dev/null 2>&1 || docker run -dp 8081:80 --name C3 httpd
                 '''
             }
         }
